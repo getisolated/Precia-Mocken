@@ -1,0 +1,195 @@
+<div class="card">
+  <div class="card-header">
+    <span class="card-title">Simulation Inputs</span>
+  </div>
+
+  <div class="tabs">
+    @for (t of tabs; track t) {
+      <button
+        type="button"
+        class="tab"
+        [class.active]="tab() === t"
+        (click)="setTab(t)"
+      >
+        {{ t }}
+      </button>
+    }
+  </div>
+
+  <div class="body">
+    @switch (tab()) {
+      @case ('Badge') {
+        <label>Badge ID</label>
+        <input
+          class="monofont"
+          [ngModel]="badge()"
+          (ngModelChange)="badge.set($event)"
+        />
+        <button
+          type="button"
+          class="btn-cyan full"
+          [disabled]="disabled()"
+          (click)="sendBadge()"
+        >
+          ↑ Send Badge (BDG)
+        </button>
+      }
+
+      @case ('Tour') {
+        <label>Numéro de tournée</label>
+        <input
+          class="monofont"
+          [ngModel]="tour()"
+          (ngModelChange)="tour.set($event)"
+        />
+        <button
+          type="button"
+          class="btn-cyan full"
+          [disabled]="disabled()"
+          (click)="sendTour()"
+        >
+          ↑ Send Tour (SCC)
+        </button>
+      }
+
+      @case ('Site') {
+        <label>Code site</label>
+        <input
+          class="monofont"
+          [ngModel]="site()"
+          (ngModelChange)="site.set($event)"
+        />
+        <button
+          type="button"
+          class="btn-cyan full"
+          [disabled]="disabled()"
+          (click)="sendSite()"
+        >
+          ↑ Send Site (SCC)
+        </button>
+      }
+
+      @case ('Button') {
+        <label>Index bouton (1=Cancel, 2=OK)</label>
+        <input
+          class="monofont"
+          [ngModel]="buttonIndex()"
+          (ngModelChange)="buttonIndex.set($event)"
+        />
+        <div class="row">
+          <button
+            type="button"
+            class="btn-ghost grow"
+            [disabled]="disabled()"
+            (click)="sendButton(1)"
+          >
+            AIB Cancel (1)
+          </button>
+          <button
+            type="button"
+            class="btn-ghost grow"
+            [disabled]="disabled()"
+            (click)="sendButton(2)"
+          >
+            AIB OK (2)
+          </button>
+        </div>
+        <button
+          type="button"
+          class="btn-cyan full mt"
+          [disabled]="disabled()"
+          (click)="sendButtonField()"
+        >
+          ↑ Send Button (AIB)
+        </button>
+      }
+
+      @case ('Weight') {
+        <div class="weight-grid">
+          <div>
+            <label>Gross (kg)</label>
+            <input
+              class="monofont"
+              [ngModel]="weight().gross"
+              (ngModelChange)="updateGross($event)"
+            />
+          </div>
+          <div>
+            <label>Tare (kg)</label>
+            <input
+              class="monofont"
+              [ngModel]="weight().tare"
+              (ngModelChange)="updateTare($event)"
+            />
+          </div>
+          <div>
+            <label>Net (kg)</label>
+            <input
+              class="monofont"
+              [ngModel]="weight().net"
+              (ngModelChange)="updateNet($event)"
+              [disabled]="autoCalcNet()"
+            />
+          </div>
+          <div>
+            <label>DSD</label>
+            <input
+              class="monofont"
+              [ngModel]="weight().dsd"
+              (ngModelChange)="updateDsd($event)"
+            />
+          </div>
+        </div>
+        <label class="checkbox">
+          <input
+            type="checkbox"
+            [ngModel]="autoCalcNet()"
+            (ngModelChange)="toggleAutoCalc($event)"
+          />
+          <span>Auto calculate net (gross − tare)</span>
+        </label>
+        <div class="row">
+          <button
+            type="button"
+            class="btn-cyan grow"
+            [disabled]="disabled()"
+            (click)="sendPds()"
+          >
+            ↑ Send PDS (stable)
+          </button>
+          <button
+            type="button"
+            class="btn-pdd grow"
+            [disabled]="disabled()"
+            (click)="sendPdd()"
+          >
+            ↑ Send PDD (unstable)
+          </button>
+        </div>
+      }
+
+      @case ('Raw') {
+        <label>Trame brute</label>
+        <textarea
+          class="monofont raw"
+          rows="4"
+          [ngModel]="rawFrame()"
+          (ngModelChange)="rawFrame.set($event)"
+        ></textarea>
+        <div class="warn-box">⚠ Le contenu sera envoyé tel quel sans validation.</div>
+        <button
+          type="button"
+          class="btn-raw full"
+          [disabled]="disabled()"
+          (click)="sendRaw()"
+        >
+          ↑ Send Raw
+        </button>
+      }
+    }
+
+    @if (disabled()) {
+      <div class="no-client">Aucun client connecté — les envois sont désactivés</div>
+    }
+  </div>
+</div>

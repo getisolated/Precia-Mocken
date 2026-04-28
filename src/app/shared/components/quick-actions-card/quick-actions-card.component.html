@@ -1,0 +1,18 @@
+<div class="card">
+  <div class="card-header">
+    <span class="card-title">Quick Actions</span>
+    @if (disabled()) {
+      <span class="warn">⚠ No client</span>
+    }
+  </div>
+  <div class="grid">
+    <button type="button" class="action green" [disabled]="disabled()" (click)="pve()">
+      <span class="label">Présence Véhicule</span>
+      <span class="hint monofont">PVE</span>
+    </button>
+    <button type="button" class="action red" [disabled]="disabled()" (click)="dve()">
+      <span class="label">Départ Véhicule</span>
+      <span class="hint monofont">DVE</span>
+    </button>
+  </div>
+</div>

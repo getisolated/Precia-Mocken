@@ -1,0 +1,41 @@
+<div class="terminal">
+  <div class="badge">BI400 · PART. 1</div>
+
+  <div class="lcd-wrap">
+    <div class="lcd">
+      @if (weightVisible()) {
+        <div class="weight-frame" [class.gray]="!vehiclePresent()">
+          <div class="weight-frame-inner">
+            <span class="weight-label">B:</span>
+            <span class="weight-value">{{ grossDisplay() }} kg</span>
+          </div>
+        </div>
+      }
+
+      <div class="screen-content">
+        @for (line of content().textRows; track $index) {
+          <div class="line afm-line">{{ line || ' ' }}</div>
+        }
+
+        @if (content().leadingBlank) {
+          <div class="line afm-line">&nbsp;</div>
+        }
+
+        @if (content().visibleCaptions.length > 0) {
+          <div class="screen-buttons">
+            @for (caption of content().visibleCaptions; track $index) {
+              <button
+                type="button"
+                class="screen-btn"
+                [class.pressed]="pressedIndex() === $index"
+                (click)="pressCaption($index)"
+              >
+                {{ caption }}
+              </button>
+            }
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,26 @@
+<div class="shell">
+  <app-header
+    (start)="onStart()"
+    (stop)="onStop()"
+    (clearLogs)="onClearLogs()"
+    (settings)="onSettings()"
+  />
+
+  <div class="body">
+    <aside class="col-left">
+      <app-tcp-status-card />
+      <app-terminal-bi400 />
+    </aside>
+
+    <section class="col-center">
+      <app-quick-actions-card />
+      <app-simulation-form />
+    </section>
+
+    <section class="col-right">
+      <app-frame-log [entries]="mock.frames()" />
+    </section>
+  </div>
+
+  <app-console-panel [lines]="mock.console()" />
+</div>

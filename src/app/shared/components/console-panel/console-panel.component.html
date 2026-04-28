@@ -1,0 +1,18 @@
+<div class="console" [class.collapsed]="!visible()">
+  <div class="bar">
+    <span class="title monofont">CONSOLE MIRROR</span>
+    <span class="counter">{{ count() }} events</span>
+    <button type="button" class="btn-ghost small toggle" (click)="toggle()">
+      {{ visible() ? '▼ Hide' : '▲ Show' }}
+    </button>
+  </div>
+  @if (visible()) {
+    <div class="terminal" #terminal>
+      @for (line of lines(); track $index) {
+        <div class="line monofont" [attr.data-channel]="line.channel">
+          {{ formatLine(line) }}
+        </div>
+      }
+    </div>
+  }
+</div>

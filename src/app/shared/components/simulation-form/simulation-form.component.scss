@@ -1,0 +1,151 @@
+:host {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+}
+
+.card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.tabs {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid var(--border);
+  padding: 0 8px;
+}
+
+.tab {
+  background: transparent;
+  color: var(--text2);
+  border: none;
+  border-bottom: 2px solid transparent;
+  border-radius: 0;
+  padding: 7px 10px;
+  font-size: 11px;
+  font-weight: 400;
+  cursor: pointer;
+  transition: all 0.12s;
+}
+.tab.active {
+  color: var(--cyan);
+  border-bottom-color: var(--cyan);
+  font-weight: 600;
+}
+
+.body {
+  padding: 12px 14px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.body label {
+  display: block;
+  font-size: 11px;
+  color: var(--text2);
+  margin-bottom: 3px;
+}
+
+.body input,
+.body textarea {
+  margin-bottom: 8px;
+}
+
+.full {
+  width: 100%;
+}
+
+.mt {
+  margin-top: 7px;
+}
+
+.row {
+  display: flex;
+  gap: 6px;
+}
+.row .grow {
+  flex: 1;
+}
+
+.weight-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 10px;
+}
+
+.checkbox {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  color: var(--text);
+  font-size: 11px;
+}
+.checkbox input[type='checkbox'] {
+  width: auto;
+  accent-color: var(--cyan);
+  margin: 0;
+}
+
+.btn-pdd {
+  background: var(--yellow-dim);
+  color: var(--yellow);
+  border: 1px solid var(--yellow-dim);
+  border-radius: var(--radius);
+  padding: 5px 10px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+}
+.btn-pdd:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+.btn-pdd:hover:not(:disabled) {
+  background: var(--yellow);
+  color: #000;
+}
+
+.raw {
+  resize: vertical;
+}
+
+.warn-box {
+  background: oklch(0.38 0.09 45 / 0.12);
+  border: 1px solid var(--orange-dim);
+  border-radius: 4px;
+  padding: 5px 8px;
+  font-size: 11px;
+  color: var(--orange);
+  margin-bottom: 8px;
+}
+
+.btn-raw {
+  background: var(--orange-dim);
+  color: var(--orange);
+  border: 1px solid var(--orange-dim);
+  border-radius: var(--radius);
+  padding: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.btn-raw:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+.btn-raw:hover:not(:disabled) {
+  background: var(--orange);
+  color: #000;
+}
+
+.no-client {
+  margin-top: 10px;
+  font-size: 11px;
+  color: var(--red);
+  text-align: center;
+}

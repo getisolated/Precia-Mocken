@@ -1,0 +1,45 @@
+<div class="topbar">
+  <div class="brand">
+    <div class="logo">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+        <rect x="1" y="10" width="14" height="4" rx="1" fill="var(--orange)" opacity="0.9" />
+        <rect x="2" y="7" width="12" height="2" rx="1" fill="var(--orange)" opacity="0.6" />
+        <rect x="4" y="4" width="8" height="2" rx="1" fill="var(--orange)" opacity="0.4" />
+        <circle cx="8" cy="2.5" r="1.2" fill="var(--orange)" opacity="0.8" />
+      </svg>
+    </div>
+    <div class="title-block">
+      <div class="title">Precia Molen BI400 Mock</div>
+      <div class="subtitle monofont">v1.0.0-dev · Electron / Angular</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <app-status-pill [state]="mock.status().state" />
+
+  <div class="endpoint-pill">
+    <span class="dot" [class.active]="mock.isRunning()"></span>
+    <span class="monofont">{{ mock.status().endpoint }}</span>
+  </div>
+
+  <div class="actions">
+    @if (mock.status().state === 'stopped') {
+      <button type="button" class="btn-success" (click)="onStart()">
+        ▶ Start Server
+      </button>
+    } @else {
+      <button type="button" class="btn-danger" (click)="onStop()">
+        ■ Stop Server
+      </button>
+    }
+    <button type="button" class="btn-ghost" title="Settings" (click)="onSettings()">
+      ⚙ Settings
+    </button>
+    <button type="button" class="btn-ghost" (click)="onClearLogs()">
+      ✕ Clear Logs
+    </button>
+  </div>
+
+  <app-window-controls />
+</div>

@@ -1,0 +1,101 @@
+<div class="card">
+  <div class="card-header header">
+    <span class="card-title">Frame Log</span>
+    <div class="filters">
+      <input
+        type="search"
+        placeholder="Search…"
+        [ngModel]="search()"
+        (ngModelChange)="search.set($event)"
+      />
+      <select
+        [ngModel]="directionFilter()"
+        (ngModelChange)="directionFilter.set($event)"
+      >
+        @for (d of directions; track d) {
+          <option [value]="d">{{ d === 'all' ? 'All dirs' : d }}</option>
+        }
+      </select>
+      <select
+        [ngModel]="typeFilter()"
+        (ngModelChange)="typeFilter.set($event)"
+      >
+        @for (t of typeOptions; track t) {
+          <option [value]="t">{{ t === 'all' ? 'All types' : t }}</option>
+        }
+      </select>
+      <span class="counter">{{ count() }} entrées</span>
+      <button type="button" class="btn-ghost small" (click)="clear()">
+        ✕ Clear
+      </button>
+    </div>
+  </div>
+
+  <div class="col-headers">
+    <span>Time</span>
+    <span>Dir</span>
+    <span>Type</span>
+    <span>Description</span>
+    <span>Raw</span>
+  </div>
+
+  <div class="rows" #rows>
+    @for (entry of filtered(); track trackById($index, entry)) {
+      <div
+        class="row"
+        [class]="rowClass(entry.direction)"
+        [class.expanded]="isExpanded(entry.id)"
+        (click)="toggle(entry.id)"
+      >
+        <div class="row-main">
+          <span class="time monofont">{{ formatTime(entry.timestamp) }}</span>
+          <span class="badge" [class]="badge(entry.direction).cls">
+            {{ badge(entry.direction).label }}
+          </span>
+          <span class="type monofont" [class]="'dir-' + entry.direction">
+            {{ entry.type || '—' }}
+          </span>
+          <span class="desc">{{ entry.description }}</span>
+          <span
+            class="raw monofont"
+            (click)="copy(entry.raw, $event)"
+            [title]="entry.raw || ''"
+          >
+            {{ entry.raw || '—' }}
+          </span>
+        </div>
+        @if (isExpanded(entry.id)) {
+          <div class="row-detail" (click)="$event.stopPropagation()">
+            @if (entry.payload) {
+              <div class="block">
+                <div class="block-label">PAYLOAD DÉCODÉ</div>
+                <code class="block-code cyan">{{ entry.payload }}</code>
+              </div>
+            }
+            @if (entry.raw) {
+              <div class="block">
+                <div class="block-label">RAW FRAME</div>
+                <div class="block-row">
+                  <code class="block-code orange">{{ entry.raw }}</code>
+                  <button
+                    type="button"
+                    class="btn-ghost small"
+                    (click)="copy(entry.raw, $event)"
+                  >
+                    ⧉ Copy
+                  </button>
+                </div>
+              </div>
+            }
+            @if (!entry.payload && !entry.raw) {
+              <span class="muted">Aucun détail supplémentaire</span>
+            }
+          </div>
+        }
+      </div>
+    }
+    @if (filtered().length === 0) {
+      <div class="empty">Aucune trame.</div>
+    }
+  </div>
+</div>

@@ -1,0 +1,160 @@
+/* LCD geometry: 10 lines × 18px = 180px content height, 16:9 → ~320px wide */
+$line-h: 18px;
+$lcd-h: 10 * $line-h;
+$row2: 2 * $line-h;
+$row3: 3 * $line-h;
+$bezel: 3px;
+
+:host {
+  display: block;
+}
+
+.terminal {
+  background: linear-gradient(160deg, #525660 0%, #3d4149 50%, #363a42 100%);
+  border-radius: 10px;
+  padding: 10px;
+  border: 1px solid #26292f;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.4),
+    0 4px 20px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.badge {
+  text-align: center;
+  font-size: 8px;
+  color: #485868;
+  font-family: var(--mono);
+  letter-spacing: 0.18em;
+  font-weight: 700;
+}
+
+.lcd-wrap {
+  background: #181c22;
+  border-radius: 5px;
+  padding: $bezel;
+  box-shadow:
+    inset 0 2px 8px rgba(0, 0, 0, 0.95),
+    inset 0 0 0 1px rgba(0, 0, 0, 0.5);
+}
+
+.lcd {
+  background: #050d05;
+  border-radius: 3px;
+  height: $lcd-h;
+  aspect-ratio: 16 / 9;
+  display: flex;
+  flex-direction: column;
+  font-family: var(--mono);
+  font-size: 11px;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+/* Weight frame: 3 lines, 1px double border, 10% horizontal margin */
+.weight-frame {
+  height: $row3;
+  margin: 0 10%;
+  flex-shrink: 0;
+  border: 1px solid oklch(0.6 0.14 145);
+  padding: 1px;
+  box-sizing: border-box;
+  background: rgba(0, 200, 80, 0.05);
+}
+.weight-frame.gray {
+  border-color: oklch(0.45 0 0);
+  background: rgba(120, 120, 120, 0.05);
+}
+.weight-frame.gray .weight-frame-inner {
+  border-color: oklch(0.45 0 0);
+  color: oklch(0.55 0 0);
+}
+.weight-frame-inner {
+  height: 100%;
+  border: 1px solid oklch(0.6 0.14 145);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  padding: 0 16px;
+  color: oklch(0.78 0.2 145);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  box-sizing: border-box;
+}
+.weight-label {
+  text-align: left;
+  flex-shrink: 0;
+  font-size: 2.5rem;
+}
+.weight-value {
+  text-align: right;
+  margin-left: auto;
+  font-size: 2.5rem;
+}
+
+/* On-screen buttons: 2 lines tall, half width, 2px border (collapsed) */
+.screen-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  flex: 1;
+  align-content: start;
+  overflow: hidden;
+  min-height: 0;
+}
+.screen-btn {
+  height: $row2;
+  border: 2px solid oklch(0.55 0.14 145);
+  background: transparent;
+  color: oklch(0.73 0.19 145);
+  border-radius: 0;
+  font-family: var(--mono);
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+/* Collapse adjacent borders without overlap (works for any caption count, 2 per row) */
+.screen-btn:nth-child(even) {
+  border-left-width: 0;
+}
+.screen-btn:nth-child(n + 3) {
+  border-top-width: 0;
+}
+.screen-btn.pressed {
+  background: rgba(0, 180, 80, 0.18);
+  color: oklch(0.85 0.2 145);
+}
+
+.screen-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-height: 0;
+}
+
+.line {
+  white-space: pre;
+  overflow: hidden;
+  line-height: $line-h;
+  height: $line-h;
+  padding: 0 6px;
+  text-align: center;
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+
+.afm-line {
+  color: oklch(0.73 0.19 145);
+}

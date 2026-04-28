@@ -1,0 +1,45 @@
+@if (available()) {
+  <div class="window-controls" role="group" aria-label="Window controls">
+    <button
+      type="button"
+      class="ctrl"
+      (click)="minimize()"
+      title="Minimize"
+      aria-label="Minimize"
+    >
+      <svg viewBox="0 0 10 10" aria-hidden="true">
+        <path d="M0 5 H10" />
+      </svg>
+    </button>
+
+    <button
+      type="button"
+      class="ctrl"
+      (click)="toggleMaximize()"
+      [title]="isMaximized() ? 'Restore' : 'Maximize'"
+      [attr.aria-label]="isMaximized() ? 'Restore' : 'Maximize'"
+    >
+      @if (isMaximized()) {
+        <svg viewBox="0 0 10 10" aria-hidden="true">
+          <path d="M2.5 0.5 H9.5 V7.5 H7.5 M0.5 2.5 H7.5 V9.5 H0.5 Z" />
+        </svg>
+      } @else {
+        <svg viewBox="0 0 10 10" aria-hidden="true">
+          <rect x="0.5" y="0.5" width="9" height="9" />
+        </svg>
+      }
+    </button>
+
+    <button
+      type="button"
+      class="ctrl ctrl-close"
+      (click)="close()"
+      title="Close"
+      aria-label="Close"
+    >
+      <svg viewBox="0 0 10 10" aria-hidden="true">
+        <path d="M0 0 L10 10 M10 0 L0 10" />
+      </svg>
+    </button>
+  </div>
+}

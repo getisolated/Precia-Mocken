@@ -1,0 +1,78 @@
+<div class="card">
+  <div class="card-header">
+    <span class="card-title">TCP Status</span>
+    <app-status-pill [state]="status().state" />
+  </div>
+  <div class="body">
+    <div class="grid">
+      <div class="cell">
+        <div class="key">Serveur</div>
+        <div class="val monofont" [class.green]="listening()" [class.dim]="!listening()">
+          {{ listening() ? '● Actif' : '○ Arrêté' }}
+        </div>
+      </div>
+      <div class="cell">
+        <div class="key">Host</div>
+        <div class="val monofont">{{ status().host }}</div>
+      </div>
+      <div class="cell">
+        <div class="key">Port</div>
+        <div class="val monofont cyan">{{ status().port }}</div>
+      </div>
+      <div class="cell">
+        <div class="key">Endpoint</div>
+        <div class="val monofont">{{ status().endpoint }}</div>
+      </div>
+    </div>
+
+    <div class="separator"></div>
+
+    <div class="grid">
+      <div class="cell">
+        <div class="key">Client</div>
+        <div class="val monofont" [class.green]="connected()" [class.dim]="!connected()">
+          {{ clientEndpoint() }}
+        </div>
+      </div>
+      <div class="cell">
+        <div class="key">Dernière cx</div>
+        <div class="val monofont">{{ lastConnection() }}</div>
+      </div>
+      <div class="cell">
+        <div class="key">Dernier msg</div>
+        <div class="val monofont">{{ lastMessage() }}</div>
+      </div>
+      <div class="cell">
+        <div class="key">Trames reçues</div>
+        <div class="val monofont">{{ frameCount() }}</div>
+      </div>
+    </div>
+
+    @if (status().errorMessage) {
+      <div class="error monofont">{{ status().errorMessage }}</div>
+    }
+
+    <div class="actions">
+      @if (canStart()) {
+        <button type="button" class="btn-success grow" [disabled]="busy()" (click)="start()">
+          ▶ Start
+        </button>
+      } @else {
+        <button type="button" class="btn-danger grow" [disabled]="busy()" (click)="stop()">
+          ■ Stop
+        </button>
+      }
+      <button
+        type="button"
+        class="btn-ghost grow"
+        [disabled]="busy() || canStart()"
+        (click)="restart()"
+      >
+        ↺ Restart
+      </button>
+      <button type="button" class="btn-ghost icon" title="Copy endpoint" (click)="copyEndpoint()">
+        ⧉
+      </button>
+    </div>
+  </div>
+</div>

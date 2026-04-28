@@ -1,0 +1,104 @@
+:host {
+  display: block;
+  flex-shrink: 0;
+}
+
+.topbar {
+  height: 52px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  padding: 0 0 0 20px;
+  gap: 16px;
+  -webkit-app-region: drag;
+  app-region: drag;
+  user-select: none;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo {
+  width: 28px;
+  height: 28px;
+  background: var(--orange-dim);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.title-block {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+.title {
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.01em;
+  color: var(--text);
+}
+
+.subtitle {
+  font-size: 10px;
+  color: var(--text3);
+}
+
+.divider {
+  width: 1px;
+  height: 28px;
+  background: var(--border);
+  margin: 0 4px;
+}
+
+app-status-pill {
+  -webkit-app-region: no-drag;
+  app-region: no-drag;
+}
+
+.endpoint-pill {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  -webkit-app-region: no-drag;
+  app-region: no-drag;
+}
+.endpoint-pill .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--text3);
+  flex-shrink: 0;
+}
+.endpoint-pill .dot.active {
+  background: var(--green);
+}
+.endpoint-pill .monofont {
+  font-size: 12px;
+  color: var(--text2);
+}
+
+.actions {
+  margin-left: auto;
+  display: flex;
+  gap: 8px;
+  -webkit-app-region: no-drag;
+  app-region: no-drag;
+}
+
+app-window-controls {
+  -webkit-app-region: no-drag;
+  app-region: no-drag;
+  height: 100%;
+}
