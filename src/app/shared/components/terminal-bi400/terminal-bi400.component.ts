@@ -27,6 +27,23 @@ export class TerminalBi400Component {
 
   readonly weightVisible = computed(() => this.mock.lcdWeightVisible());
   readonly vehiclePresent = computed(() => this.mock.vehiclePresent());
+  readonly promptActive = computed(() => this.mock.lcdPrompt() !== null);
+  readonly promptText = computed(() => this.mock.lcdPrompt());
+  readonly saisieValue = computed(() => this.mock.saisieBuffer());
+
+  onSaisieInput(event: Event): void {
+    this.mock.saisieBuffer.set((event.target as HTMLInputElement).value);
+  }
+
+  pressKey(key: string): void {
+    if (key === 'esc') {
+      this.mock.sendCancel();
+    } else if (key === 'backspace') {
+      this.mock.submitSaisie();
+    } else {
+      this.mock.appendSaisie(key);
+    }
+  }
 
   pressCaption(index: number): void {
     this.pressedIndex.set(index);

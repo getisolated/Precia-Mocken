@@ -70,46 +70,6 @@
   flex: 1;
 }
 
-.weight-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0 10px;
-}
-
-.checkbox {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  margin-bottom: 10px;
-  cursor: pointer;
-  color: var(--text);
-  font-size: 11px;
-}
-.checkbox input[type='checkbox'] {
-  width: auto;
-  accent-color: var(--cyan);
-  margin: 0;
-}
-
-.btn-pdd {
-  background: var(--yellow-dim);
-  color: var(--yellow);
-  border: 1px solid var(--yellow-dim);
-  border-radius: var(--radius);
-  padding: 5px 10px;
-  font-size: 12px;
-  font-weight: 500;
-  cursor: pointer;
-}
-.btn-pdd:disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
-}
-.btn-pdd:hover:not(:disabled) {
-  background: var(--yellow);
-  color: #000;
-}
-
 .raw {
   resize: vertical;
 }

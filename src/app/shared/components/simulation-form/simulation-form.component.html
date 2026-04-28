@@ -1,6 +1,6 @@
 <div class="card">
   <div class="card-header">
-    <span class="card-title">Simulation Inputs</span>
+    <span class="card-title">Entrées de simulation</span>
   </div>
 
   <div class="tabs">
@@ -19,7 +19,7 @@
   <div class="body">
     @switch (tab()) {
       @case ('Badge') {
-        <label>Badge ID</label>
+        <label>Identifiant badge</label>
         <input
           class="monofont"
           [ngModel]="badge()"
@@ -31,46 +31,35 @@
           [disabled]="disabled()"
           (click)="sendBadge()"
         >
-          ↑ Send Badge (BDG)
+          ↑ Envoyer badge (BDG)
         </button>
       }
 
-      @case ('Tour') {
-        <label>Numéro de tournée</label>
+      @case ('Clavier') {
+        @if (promptActive()) {
+          <label>Saisie prompt (lié au terminal)</label>
+        } @else {
+          <label>Texte à envoyer</label>
+        }
         <input
           class="monofont"
-          [ngModel]="tour()"
-          (ngModelChange)="tour.set($event)"
+          [ngModel]="clavierInput()"
+          (ngModelChange)="onClavierInput($event)"
         />
-        <button
-          type="button"
-          class="btn-cyan full"
-          [disabled]="disabled()"
-          (click)="sendTour()"
-        >
-          ↑ Send Tour (SCC)
-        </button>
-      }
-
-      @case ('Site') {
-        <label>Code site</label>
-        <input
-          class="monofont"
-          [ngModel]="site()"
-          (ngModelChange)="site.set($event)"
-        />
-        <button
-          type="button"
-          class="btn-cyan full"
-          [disabled]="disabled()"
-          (click)="sendSite()"
-        >
-          ↑ Send Site (SCC)
-        </button>
+        @if (!promptActive()) {
+          <button
+            type="button"
+            class="btn-cyan full"
+            [disabled]="disabled()"
+            (click)="sendClavier()"
+          >
+            ↑ Envoyer (SCC)
+          </button>
+        }
       }
 
       @case ('Button') {
-        <label>Index bouton (1=Cancel, 2=OK)</label>
+        <label>Index bouton (1=Annuler, 2=OK)</label>
         <input
           class="monofont"
           [ngModel]="buttonIndex()"
@@ -83,7 +72,7 @@
             [disabled]="disabled()"
             (click)="sendButton(1)"
           >
-            AIB Cancel (1)
+            AIB Annuler (1)
           </button>
           <button
             type="button"
@@ -100,72 +89,8 @@
           [disabled]="disabled()"
           (click)="sendButtonField()"
         >
-          ↑ Send Button (AIB)
+          ↑ Envoyer bouton (AIB)
         </button>
-      }
-
-      @case ('Weight') {
-        <div class="weight-grid">
-          <div>
-            <label>Gross (kg)</label>
-            <input
-              class="monofont"
-              [ngModel]="weight().gross"
-              (ngModelChange)="updateGross($event)"
-            />
-          </div>
-          <div>
-            <label>Tare (kg)</label>
-            <input
-              class="monofont"
-              [ngModel]="weight().tare"
-              (ngModelChange)="updateTare($event)"
-            />
-          </div>
-          <div>
-            <label>Net (kg)</label>
-            <input
-              class="monofont"
-              [ngModel]="weight().net"
-              (ngModelChange)="updateNet($event)"
-              [disabled]="autoCalcNet()"
-            />
-          </div>
-          <div>
-            <label>DSD</label>
-            <input
-              class="monofont"
-              [ngModel]="weight().dsd"
-              (ngModelChange)="updateDsd($event)"
-            />
-          </div>
-        </div>
-        <label class="checkbox">
-          <input
-            type="checkbox"
-            [ngModel]="autoCalcNet()"
-            (ngModelChange)="toggleAutoCalc($event)"
-          />
-          <span>Auto calculate net (gross − tare)</span>
-        </label>
-        <div class="row">
-          <button
-            type="button"
-            class="btn-cyan grow"
-            [disabled]="disabled()"
-            (click)="sendPds()"
-          >
-            ↑ Send PDS (stable)
-          </button>
-          <button
-            type="button"
-            class="btn-pdd grow"
-            [disabled]="disabled()"
-            (click)="sendPdd()"
-          >
-            ↑ Send PDD (unstable)
-          </button>
-        </div>
       }
 
       @case ('Raw') {
@@ -183,7 +108,7 @@
           [disabled]="disabled()"
           (click)="sendRaw()"
         >
-          ↑ Send Raw
+          ↑ Envoyer brut
         </button>
       }
     }

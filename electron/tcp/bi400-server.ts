@@ -2,7 +2,7 @@ import { EventEmitter } from "node:events";
 import * as net from "node:net";
 import { Bi400FrameParser } from "./bi400-parser.js";
 import { describeFrame } from "./bi400-describer.js";
-import { buildPdd, buildPds } from "./bi400-frame-builder.js";
+import { buildDepartureVehicle, buildPdd, buildPds } from "./bi400-frame-builder.js";
 import type {
   ConsoleLine,
   FrameLogEntry,
@@ -111,10 +111,9 @@ export class Bi400Server extends EventEmitter {
           startedAt,
           frameCount: 0,
         });
-        this.emitConsole("tcp", `Listening on ${config.host}:${config.port}`);
-        this.emitFrame({
+        this.emitConsole("tcp", `Écoute sur ${config.host}:${config.port}`);        this.emitFrame({
           direction: "system",
-          description: `TCP server listening on ${config.host}:${config.port}`,
+          description: `Serveur TCP en écoute sur ${config.host}:${config.port}`,
           type: "TCP",
         });
         resolve(this.getStatus());
@@ -153,10 +152,10 @@ export class Bi400Server extends EventEmitter {
           clientEndpoint: undefined,
           errorMessage: undefined,
         });
-        this.emitConsole("tcp", "Server stopped");
+        this.emitConsole("tcp", "Serveur arrêté");
         this.emitFrame({
           direction: "system",
-          description: "TCP server stopped",
+          description: "Serveur TCP arrêté",
           type: "TCP",
         });
         resolve(this.getStatus());
@@ -186,7 +185,7 @@ export class Bi400Server extends EventEmitter {
       this.client.write(raw);
       this.emitFrame({
         direction: "outgoing",
-        description: options?.description ?? `Sent ${options?.type ?? "frame"}`,
+        description: options?.description ?? `Envoyé ${options?.type ?? "trame"}`,
         type: options?.type,
         raw,
         payload: raw,
@@ -209,7 +208,7 @@ export class Bi400Server extends EventEmitter {
 
   private handleConnection(socket: net.Socket): void {
     if (this.client && !this.client.destroyed) {
-      const message = `Rejected secondary client ${socket.remoteAddress}:${socket.remotePort} (single-client MVP)`;
+      const message = `Client secondaire refusé ${socket.remoteAddress}:${socket.remotePort} (client unique)`;
       this.emitConsole("tcp", message);
       this.emitFrame({
         direction: "system",
@@ -232,12 +231,16 @@ export class Bi400Server extends EventEmitter {
       lastConnectionAt,
       frameCount: 0,
     });
-    this.emitConsole("tcp", `Client connected: ${endpoint}`);
-    this.emitFrame({
+    this.emitConsole("tcp", `Client connecté : ${endpoint}`);    this.emitFrame({
       direction: "system",
-      description: `Client connected: ${endpoint}`,
+      description: `Client connecté : ${endpoint}`,
       type: "TCP",
       clientEndpoint: endpoint,
+    });
+
+    this.send(buildDepartureVehicle(), {
+      type: "DVE",
+      description: "DVE auto à la connexion",
     });
 
     socket.on("data", (chunk: Buffer | string) => {
@@ -255,10 +258,9 @@ export class Bi400Server extends EventEmitter {
           clientEndpoint: undefined,
         };
         this.updateStatus(next);
-        this.emitConsole("tcp", `Client disconnected: ${endpoint}`);
-        this.emitFrame({
+        this.emitConsole("tcp", `Client déconnecté : ${endpoint}`);        this.emitFrame({
           direction: "system",
-          description: `Client disconnected: ${endpoint}`,
+          description: `Client déconnecté : ${endpoint}`,
           type: "TCP",
           clientEndpoint: endpoint,
         });
@@ -307,7 +309,7 @@ export class Bi400Server extends EventEmitter {
           : buildPdd(this.storedWeight);
         this.send(replyRaw, {
           type: description.type,
-          description: `Auto reply to ${description.type} poll`,
+          description: `Réponse auto à ${description.type}`,
         });
       }
     }

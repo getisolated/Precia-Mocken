@@ -1,6 +1,6 @@
 <div class="card">
   <div class="card-header">
-    <span class="card-title">TCP Status</span>
+    <span class="card-title">Statut TCP</span>
     <app-status-pill [state]="status().state" />
   </div>
   <div class="body">
@@ -12,7 +12,7 @@
         </div>
       </div>
       <div class="cell">
-        <div class="key">Host</div>
+        <div class="key">Hôte</div>
         <div class="val monofont">{{ status().host }}</div>
       </div>
       <div class="cell">
@@ -20,7 +20,7 @@
         <div class="val monofont cyan">{{ status().port }}</div>
       </div>
       <div class="cell">
-        <div class="key">Endpoint</div>
+        <div class="key">Point d'accès</div>
         <div class="val monofont">{{ status().endpoint }}</div>
       </div>
     </div>
@@ -55,11 +55,11 @@
     <div class="actions">
       @if (canStart()) {
         <button type="button" class="btn-success grow" [disabled]="busy()" (click)="start()">
-          ▶ Start
+          ▶ Démarrer
         </button>
       } @else {
         <button type="button" class="btn-danger grow" [disabled]="busy()" (click)="stop()">
-          ■ Stop
+          ■ Arrêter
         </button>
       }
       <button
@@ -68,9 +68,9 @@
         [disabled]="busy() || canStart()"
         (click)="restart()"
       >
-        ↺ Restart
+        ↺ Redémarrer
       </button>
-      <button type="button" class="btn-ghost icon" title="Copy endpoint" (click)="copyEndpoint()">
+      <button type="button" class="btn-ghost icon" title="Copier le point d'accès" (click)="copyEndpoint()">
         ⧉
       </button>
     </div>

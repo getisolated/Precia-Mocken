@@ -1,10 +1,10 @@
 <div class="card">
   <div class="card-header header">
-    <span class="card-title">Frame Log</span>
+    <span class="card-title">Journal des trames</span>
     <div class="filters">
       <input
         type="search"
-        placeholder="Search…"
+        placeholder="Rechercher…"
         [ngModel]="search()"
         (ngModelChange)="search.set($event)"
       />
@@ -13,7 +13,7 @@
         (ngModelChange)="directionFilter.set($event)"
       >
         @for (d of directions; track d) {
-          <option [value]="d">{{ d === 'all' ? 'All dirs' : d }}</option>
+          <option [value]="d">{{ d === 'all' ? 'Toutes directions' : d }}</option>
         }
       </select>
       <select
@@ -21,22 +21,22 @@
         (ngModelChange)="typeFilter.set($event)"
       >
         @for (t of typeOptions; track t) {
-          <option [value]="t">{{ t === 'all' ? 'All types' : t }}</option>
+          <option [value]="t">{{ t === 'all' ? 'Tous types' : t }}</option>
         }
       </select>
       <span class="counter">{{ count() }} entrées</span>
       <button type="button" class="btn-ghost small" (click)="clear()">
-        ✕ Clear
+        ✕ Effacer
       </button>
     </div>
   </div>
 
   <div class="col-headers">
-    <span>Time</span>
+    <span>Heure</span>
     <span>Dir</span>
     <span>Type</span>
     <span>Description</span>
-    <span>Raw</span>
+    <span>Brut</span>
   </div>
 
   <div class="rows" #rows>
@@ -74,7 +74,7 @@
             }
             @if (entry.raw) {
               <div class="block">
-                <div class="block-label">RAW FRAME</div>
+                <div class="block-label">TRAME BRUTE</div>
                 <div class="block-row">
                   <code class="block-code orange">{{ entry.raw }}</code>
                   <button
@@ -82,7 +82,7 @@
                     class="btn-ghost small"
                     (click)="copy(entry.raw, $event)"
                   >
-                    ⧉ Copy
+                    ⧉ Copier
                   </button>
                 </div>
               </div>

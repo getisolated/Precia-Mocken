@@ -1,9 +1,9 @@
 <div class="console" [class.collapsed]="!visible()">
   <div class="bar">
-    <span class="title monofont">CONSOLE MIRROR</span>
-    <span class="counter">{{ count() }} events</span>
+    <span class="title monofont">CONSOLE</span>
+    <span class="counter">{{ count() }} événements</span>
     <button type="button" class="btn-ghost small toggle" (click)="toggle()">
-      {{ visible() ? '▼ Hide' : '▲ Show' }}
+      {{ visible() ? '▼ Masquer' : '▲ Afficher' }}
     </button>
   </div>
   @if (visible()) {

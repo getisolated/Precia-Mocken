@@ -4,8 +4,8 @@
       type="button"
       class="ctrl"
       (click)="minimize()"
-      title="Minimize"
-      aria-label="Minimize"
+      title="Réduire"
+      aria-label="Réduire"
     >
       <svg viewBox="0 0 10 10" aria-hidden="true">
         <path d="M0 5 H10" />
@@ -16,8 +16,8 @@
       type="button"
       class="ctrl"
       (click)="toggleMaximize()"
-      [title]="isMaximized() ? 'Restore' : 'Maximize'"
-      [attr.aria-label]="isMaximized() ? 'Restore' : 'Maximize'"
+      [title]="isMaximized() ? 'Restaurer' : 'Agrandir'"
+      [attr.aria-label]="isMaximized() ? 'Restaurer' : 'Agrandir'"
     >
       @if (isMaximized()) {
         <svg viewBox="0 0 10 10" aria-hidden="true">
@@ -34,8 +34,8 @@
       type="button"
       class="ctrl ctrl-close"
       (click)="close()"
-      title="Close"
-      aria-label="Close"
+      title="Fermer"
+      aria-label="Fermer"
     >
       <svg viewBox="0 0 10 10" aria-hidden="true">
         <path d="M0 0 L10 10 M10 0 L0 10" />

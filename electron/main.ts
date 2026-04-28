@@ -13,9 +13,9 @@ let windowIpc: {
 function createWindow(): void {
   mainWindow = new BrowserWindow({
     width: 1440,
-    height: 900,
+    height: 960,
     minWidth: 1200,
-    minHeight: 760,
+    minHeight: 850,
     backgroundColor: "#0f172a",
     frame: false,
     titleBarStyle: "hidden",

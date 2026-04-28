@@ -11,9 +11,9 @@ let windowIpc = null;
 function createWindow() {
     mainWindow = new electron_1.BrowserWindow({
         width: 1440,
-        height: 900,
+        height: 960,
         minWidth: 1200,
-        minHeight: 760,
+        minHeight: 850,
         backgroundColor: "#0f172a",
         frame: false,
         titleBarStyle: "hidden",

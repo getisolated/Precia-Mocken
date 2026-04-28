@@ -83,10 +83,10 @@ class Bi400Server extends node_events_1.EventEmitter {
                     startedAt,
                     frameCount: 0,
                 });
-                this.emitConsole("tcp", `Listening on ${config.host}:${config.port}`);
+                this.emitConsole("tcp", `Écoute sur ${config.host}:${config.port}`);
                 this.emitFrame({
                     direction: "system",
-                    description: `TCP server listening on ${config.host}:${config.port}`,
+                    description: `Serveur TCP en écoute sur ${config.host}:${config.port}`,
                     type: "TCP",
                 });
                 resolve(this.getStatus());
@@ -123,10 +123,10 @@ class Bi400Server extends node_events_1.EventEmitter {
                     clientEndpoint: undefined,
                     errorMessage: undefined,
                 });
-                this.emitConsole("tcp", "Server stopped");
+                this.emitConsole("tcp", "Serveur arrêté");
                 this.emitFrame({
                     direction: "system",
-                    description: "TCP server stopped",
+                    description: "Serveur TCP arrêté",
                     type: "TCP",
                 });
                 resolve(this.getStatus());
@@ -153,7 +153,7 @@ class Bi400Server extends node_events_1.EventEmitter {
             this.client.write(raw);
             this.emitFrame({
                 direction: "outgoing",
-                description: options?.description ?? `Sent ${options?.type ?? "frame"}`,
+                description: options?.description ?? `Envoyé ${options?.type ?? "trame"}`,
                 type: options?.type,
                 raw,
                 payload: raw,
@@ -176,7 +176,7 @@ class Bi400Server extends node_events_1.EventEmitter {
     }
     handleConnection(socket) {
         if (this.client && !this.client.destroyed) {
-            const message = `Rejected secondary client ${socket.remoteAddress}:${socket.remotePort} (single-client MVP)`;
+            const message = `Client secondaire refusé ${socket.remoteAddress}:${socket.remotePort} (client unique)`;
             this.emitConsole("tcp", message);
             this.emitFrame({
                 direction: "system",
@@ -197,12 +197,16 @@ class Bi400Server extends node_events_1.EventEmitter {
             lastConnectionAt,
             frameCount: 0,
         });
-        this.emitConsole("tcp", `Client connected: ${endpoint}`);
+        this.emitConsole("tcp", `Client connecté : ${endpoint}`);
         this.emitFrame({
             direction: "system",
-            description: `Client connected: ${endpoint}`,
+            description: `Client connecté : ${endpoint}`,
             type: "TCP",
             clientEndpoint: endpoint,
+        });
+        this.send((0, bi400_frame_builder_js_1.buildDepartureVehicle)(), {
+            type: "DVE",
+            description: "DVE auto à la connexion",
         });
         socket.on("data", (chunk) => {
             const buf = typeof chunk === "string" ? Buffer.from(chunk) : chunk;
@@ -218,10 +222,10 @@ class Bi400Server extends node_events_1.EventEmitter {
                     clientEndpoint: undefined,
                 };
                 this.updateStatus(next);
-                this.emitConsole("tcp", `Client disconnected: ${endpoint}`);
+                this.emitConsole("tcp", `Client déconnecté : ${endpoint}`);
                 this.emitFrame({
                     direction: "system",
-                    description: `Client disconnected: ${endpoint}`,
+                    description: `Client déconnecté : ${endpoint}`,
                     type: "TCP",
                     clientEndpoint: endpoint,
                 });
@@ -265,7 +269,7 @@ class Bi400Server extends node_events_1.EventEmitter {
                     : (0, bi400_frame_builder_js_1.buildPdd)(this.storedWeight);
                 this.send(replyRaw, {
                     type: description.type,
-                    description: `Auto reply to ${description.type} poll`,
+                    description: `Réponse auto à ${description.type}`,
                 });
             }
         }

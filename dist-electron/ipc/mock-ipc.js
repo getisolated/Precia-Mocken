@@ -55,11 +55,11 @@ function registerMockIpc() {
     });
     electron_1.ipcMain.handle(ipc_channels_js_1.IPC_CHANNELS.sendPve, () => safeSend((0, bi400_frame_builder_js_1.buildPresenceVehicle)(), {
         type: "PVE",
-        description: "Presence vehicle",
+        description: "Présence véhicule",
     }));
     electron_1.ipcMain.handle(ipc_channels_js_1.IPC_CHANNELS.sendDve, () => safeSend((0, bi400_frame_builder_js_1.buildDepartureVehicle)(), {
         type: "DVE",
-        description: "Departure vehicle",
+        description: "Départ véhicule",
     }));
     electron_1.ipcMain.handle(ipc_channels_js_1.IPC_CHANNELS.sendBadge, (_evt, badge) => safeSend((0, bi400_frame_builder_js_1.buildBadge)(badge ?? ""), {
         type: "BDG",
@@ -67,7 +67,7 @@ function registerMockIpc() {
     }));
     electron_1.ipcMain.handle(ipc_channels_js_1.IPC_CHANNELS.sendTour, (_evt, value) => safeSend((0, bi400_frame_builder_js_1.buildScc)(value ?? ""), {
         type: "SCC",
-        description: `Tour ${value ?? ""}`,
+        description: `Tournée ${value ?? ""}`,
     }));
     electron_1.ipcMain.handle(ipc_channels_js_1.IPC_CHANNELS.sendSite, (_evt, value) => safeSend((0, bi400_frame_builder_js_1.buildScc)(value ?? ""), {
         type: "SCC",
@@ -75,10 +75,10 @@ function registerMockIpc() {
     }));
     electron_1.ipcMain.handle(ipc_channels_js_1.IPC_CHANNELS.sendButton, (_evt, index) => safeSend((0, bi400_frame_builder_js_1.buildAib)(Number(index) || 0), {
         type: "AIB",
-        description: `Button ${index}`,
+        description: `Bouton ${index}`,
     }));
-    electron_1.ipcMain.handle(ipc_channels_js_1.IPC_CHANNELS.sendOk, () => safeSend((0, bi400_frame_builder_js_1.buildOk)(), { type: "AIB", description: "OK (button 2)" }));
-    electron_1.ipcMain.handle(ipc_channels_js_1.IPC_CHANNELS.sendCancel, () => safeSend((0, bi400_frame_builder_js_1.buildCancel)(), { type: "AIB", description: "Cancel (button 1)" }));
+    electron_1.ipcMain.handle(ipc_channels_js_1.IPC_CHANNELS.sendOk, () => safeSend((0, bi400_frame_builder_js_1.buildOk)(), { type: "AIB", description: "OK (bouton 2)" }));
+    electron_1.ipcMain.handle(ipc_channels_js_1.IPC_CHANNELS.sendCancel, () => safeSend((0, bi400_frame_builder_js_1.buildCancel)(), { type: "AIB", description: "Annuler (bouton 1)" }));
     const normalizeWeight = (payload) => ({
         gross: Number(payload?.gross) || 0,
         tare: Number(payload?.tare) || 0,
@@ -94,7 +94,7 @@ function registerMockIpc() {
             : (0, bi400_frame_builder_js_1.buildPdd)(normalized);
         return safeSend(raw, {
             type: normalized.stable ? "PDS" : "PDD",
-            description: normalized.stable ? "Stable weight" : "Unstable weight",
+            description: normalized.stable ? "Poids stable" : "Poids instable",
         });
     });
     electron_1.ipcMain.handle(ipc_channels_js_1.IPC_CHANNELS.setWeight, (_evt, payload) => {
@@ -103,7 +103,7 @@ function registerMockIpc() {
     });
     electron_1.ipcMain.handle(ipc_channels_js_1.IPC_CHANNELS.sendRaw, (_evt, raw) => safeSend((0, bi400_frame_builder_js_1.buildRaw)(raw ?? ""), {
         type: "RAW",
-        description: "Raw debug frame",
+        description: "Trame brute (debug)",
     }));
     electron_1.ipcMain.handle(ipc_channels_js_1.IPC_CHANNELS.clearLogs, () => {
         store.clear();

@@ -21,6 +21,7 @@ const FRAMES_LIMIT = 1000;
 const CONSOLE_LIMIT = 1000;
 const TOTAL_LCD_LINES = 10;
 const WEIGHT_FRAME_LINES = 3;
+const PROMPT_UI_LINES = 4;
 
 const FALLBACK_STATUS: ServerStatus = {
   state: 'stopped',
@@ -111,8 +112,8 @@ export class PreciaMockService {
   readonly lcdContent = computed(() => {
     const lines = this.lcdLines();
     const captions = this.aibCaptions();
-    const prompt = this.lcdPrompt();
-    const saisie = this.saisieBuffer();
+    const hasPrompt = this.lcdPrompt() !== null;
+    const promptBudget = hasPrompt ? PROMPT_UI_LINES : 0;
     const total = this.lcdWeightVisible()
       ? TOTAL_LCD_LINES - WEIGHT_FRAME_LINES
       : TOTAL_LCD_LINES;
@@ -124,20 +125,18 @@ export class PreciaMockService {
     for (let p = 1; p <= maxPos; p++) {
       textRows.push(lines.get(p)?.text ?? '');
     }
-    if (prompt !== null) {
-      textRows.push(`> ${prompt}`);
-      textRows.push(`${saisie}_`);
-    }
 
-    const visibleText = textRows.slice(0, total);
+    const available = Math.max(0, total - promptBudget);
+    const visibleText = textRows.slice(0, available);
     const leadingBlank =
+      !hasPrompt &&
       this.lcdWeightVisible() &&
       visibleText.length === 0 &&
       captions.length > 0;
     const skip = leadingBlank ? 1 : 0;
-    const linesLeft = Math.max(0, total - visibleText.length - skip);
+    const linesLeft = Math.max(0, total - visibleText.length - skip - promptBudget);
     const captionsFit = Math.floor(linesLeft / 2) * 2;
-    const visibleCaptions = captions.slice(0, captionsFit);
+    const visibleCaptions = hasPrompt ? [] : captions.slice(0, captionsFit);
 
     return { textRows: visibleText, visibleCaptions, leadingBlank };
   });

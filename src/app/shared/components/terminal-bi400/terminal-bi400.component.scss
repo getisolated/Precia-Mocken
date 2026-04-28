@@ -5,15 +5,22 @@ $row2: 2 * $line-h;
 $row3: 3 * $line-h;
 $bezel: 3px;
 
+/* LCD colour palette: grayish-white LCD, grayish-black text */
+$fg: #141414;
+$fg-dim: #555;
+$border: #333;
+$border-light: #666;
+$lcd-bg: #c8c8c8;
+$pressed-bg: rgba(0, 0, 0, 0.1);
+
 :host {
   display: block;
 }
 
 .terminal {
-  background: linear-gradient(160deg, #525660 0%, #3d4149 50%, #363a42 100%);
   border-radius: 10px;
   padding: 10px;
-  border: 1px solid #26292f;
+  border: 1px solid var(--border);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.1),
     inset 0 -1px 0 rgba(0, 0, 0, 0.4),
@@ -22,6 +29,7 @@ $bezel: 3px;
   flex-direction: column;
   align-items: center;
   gap: 6px;
+  background-color: var(--surface);
 }
 
 .badge {
@@ -43,7 +51,8 @@ $bezel: 3px;
 }
 
 .lcd {
-  background: #050d05;
+  background: $lcd-bg;
+  border: 2px solid #000;
   border-radius: 3px;
   height: $lcd-h;
   aspect-ratio: 16 / 9;
@@ -60,28 +69,28 @@ $bezel: 3px;
   height: $row3;
   margin: 0 10%;
   flex-shrink: 0;
-  border: 1px solid oklch(0.6 0.14 145);
+  border: 1px solid $border;
   padding: 1px;
   box-sizing: border-box;
-  background: rgba(0, 200, 80, 0.05);
+  background: rgba(0, 0, 0, 0.04);
 }
 .weight-frame.gray {
-  border-color: oklch(0.45 0 0);
-  background: rgba(120, 120, 120, 0.05);
+  border-color: $border-light;
+  background: rgba(0, 0, 0, 0.02);
 }
 .weight-frame.gray .weight-frame-inner {
-  border-color: oklch(0.45 0 0);
-  color: oklch(0.55 0 0);
+  border-color: $border-light;
+  color: $fg-dim;
 }
 .weight-frame-inner {
   height: 100%;
-  border: 1px solid oklch(0.6 0.14 145);
+  border: 1px solid $border;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 6px;
   padding: 0 16px;
-  color: oklch(0.78 0.2 145);
+  color: $fg;
   font-size: 14px;
   font-weight: 600;
   letter-spacing: 0.04em;
@@ -109,9 +118,9 @@ $bezel: 3px;
 }
 .screen-btn {
   height: $row2;
-  border: 2px solid oklch(0.55 0.14 145);
+  border: 2px solid $border;
   background: transparent;
-  color: oklch(0.73 0.19 145);
+  color: $fg;
   border-radius: 0;
   font-family: var(--mono);
   font-size: 1.5rem;
@@ -132,8 +141,8 @@ $bezel: 3px;
   border-top-width: 0;
 }
 .screen-btn.pressed {
-  background: rgba(0, 180, 80, 0.18);
-  color: oklch(0.85 0.2 145);
+  background: $pressed-bg;
+  color: #000;
 }
 
 .screen-content {
@@ -156,5 +165,86 @@ $bezel: 3px;
 }
 
 .afm-line {
-  color: oklch(0.73 0.19 145);
+  color: $fg;
+}
+
+/* Prompt UI: fieldset-like box + input + keyboard */
+.prompt-ui {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 0 4px;
+  margin: 0 10%;
+}
+
+.prompt-box {
+  position: relative;
+  border: 2px solid $border;
+  height: $row2;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  padding: 3px;
+}
+
+.prompt-label {
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: $lcd-bg;
+  color: $fg;
+  font-family: var(--mono);
+  font-size: 11px;
+  padding: 0 6px;
+  white-space: nowrap;
+  line-height: 1;
+}
+
+.prompt-input {
+  min-width: 30%;
+  max-width: 100%;
+  field-sizing: content;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: $fg;
+  font-family: var(--mono);
+  font-size: 11px;
+  padding: 0 6px;
+  box-sizing: border-box;
+  border-radius: 0;
+
+  &:focus {
+    background: rgba(0, 0, 0, 0.06);
+  }
+}
+
+.prompt-keys {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 4px;
+  margin-top: 2px;
+}
+
+.prompt-key {
+  height: $row2;
+  border: 2px solid $border;
+  background: transparent;
+  color: $fg;
+  border-radius: 0;
+  font-family: var(--mono);
+  font-size: 1.2rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  padding: 0;
+
+  &:active {
+    background: $pressed-bg;
+    color: #000;
+  }
 }

@@ -14,15 +14,15 @@ export function describeFrame(frame: ParsedFrame): FrameDescription {
     case "RZE":
       return {
         type,
-        description: "ClearScreen",
-        payload: payload || "(no payload)",
+        description: "Effacement écran",
+        payload: payload || "(aucun contenu)",
         decoded: { kind: "rze" },
       };
     case "RZP": {
       const decoded = decodeRzp(payload);
       return {
         type,
-        description: "ClearPartial",
+        description: "Effacement partiel",
         payload,
         decoded,
       };
@@ -30,14 +30,14 @@ export function describeFrame(frame: ParsedFrame): FrameDescription {
     case "FIL":
       return {
         type,
-        description: "Filter",
+        description: "Filtre",
         payload,
       };
     case "AFM": {
       const decoded = decodeAfm(payload);
       const description = decoded
-        ? `DisplayLine pos=${decoded.position} size=${decoded.size} "${decoded.text}"`
-        : "DisplayLine";
+        ? `Affichage ligne pos=${decoded.position} taille=${decoded.size} "${decoded.text}"`
+        : "Affichage ligne";
       return {
         type,
         description,
@@ -48,8 +48,8 @@ export function describeFrame(frame: ParsedFrame): FrameDescription {
     case "SCC": {
       const decoded = decodeSccPrompt(payload);
       const description = decoded
-        ? `PromptUser "${decoded.prompt}" maxLen=${decoded.maxLen}`
-        : "PromptUser";
+        ? `Invite saisie "${decoded.prompt}" max=${decoded.maxLen}`
+        : "Invite saisie";
       return {
         type,
         description,
@@ -60,8 +60,8 @@ export function describeFrame(frame: ParsedFrame): FrameDescription {
     case "AIB": {
       const decoded = decodeAibPrompt(payload);
       const description = decoded
-        ? `DisplayButtons [${decoded.captions.join(", ")}]`
-        : "DisplayButtons";
+        ? `Affichage boutons [${decoded.captions.join(", ")}]`
+        : "Affichage boutons";
       return {
         type,
         description,
@@ -73,7 +73,7 @@ export function describeFrame(frame: ParsedFrame): FrameDescription {
       const decoded = decodeAmp(payload);
       return {
         type,
-        description: decoded.visible ? "DisplayWeight ON" : "DisplayWeight OFF",
+        description: decoded.visible ? "Affichage poids ON" : "Affichage poids OFF",
         payload,
         decoded,
       };
@@ -81,31 +81,31 @@ export function describeFrame(frame: ParsedFrame): FrameDescription {
     case "PDD":
       return {
         type,
-        description: "GetWeight (poll)",
+        description: "Demande poids (poll)",
         payload,
       };
     case "PDS":
       return {
         type,
-        description: "GetStableWeight (poll)",
+        description: "Demande poids stable (poll)",
         payload,
       };
     case "IMP":
       return {
         type,
-        description: "Print",
+        description: "Impression",
         payload,
       };
     case "OUT":
       return {
         type,
-        description: "SetAccessoryState",
+        description: "État accessoire",
         payload,
       };
     default:
       return {
         type: type || "???",
-        description: "Unknown frame",
+        description: "Trame inconnue",
         payload,
       };
   }

@@ -1,5 +1,5 @@
 <div class="terminal">
-  <div class="badge">BI400 · PART. 1</div>
+  <div class="badge">BI400 · SIMULATION ECRAN</div>
 
   <div class="lcd-wrap">
     <div class="lcd">
@@ -33,6 +33,26 @@
                 {{ caption }}
               </button>
             }
+          </div>
+        }
+
+        @if (promptActive()) {
+          <div class="prompt-ui">
+            <div class="prompt-box">
+              <span class="prompt-label">{{ promptText() }}</span>
+              <input
+                type="text"
+                class="prompt-input"
+                [value]="saisieValue()"
+                (input)="onSaisieInput($event)"
+              />
+            </div>
+            <div class="prompt-keys">
+              <button type="button" class="prompt-key" (click)="pressKey('esc')">Esc</button>
+              <button type="button" class="prompt-key" (click)="pressKey('.')">.</button>
+              <button type="button" class="prompt-key" (click)="pressKey('_')">_</button>
+              <button type="button" class="prompt-key" (click)="pressKey('backspace')">&#x2190;</button>
+            </div>
           </div>
         }
       </div>

@@ -11,6 +11,7 @@ import { QuickActionsCardComponent } from '../../shared/components/quick-actions
 import { SimulationFormComponent } from '../../shared/components/simulation-form/simulation-form.component';
 import { FrameLogComponent } from '../../shared/components/frame-log/frame-log.component';
 import { ConsolePanelComponent } from '../../shared/components/console-panel/console-panel.component';
+import { WeightCardComponent } from '../../shared/components/weight-card/weight-card.component';
 import { PreciaMockService } from '../../core/services/precia-mock.service';
 
 @Component({
@@ -24,6 +25,7 @@ import { PreciaMockService } from '../../core/services/precia-mock.service';
     SimulationFormComponent,
     FrameLogComponent,
     ConsolePanelComponent,
+    WeightCardComponent,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './dashboard.component.html',

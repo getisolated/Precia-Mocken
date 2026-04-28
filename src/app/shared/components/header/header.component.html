@@ -9,7 +9,7 @@
       </svg>
     </div>
     <div class="title-block">
-      <div class="title">Precia Molen BI400 Mock</div>
+      <div class="title">Precia Molen BI400 Simulateur</div>
       <div class="subtitle monofont">v1.0.0-dev · Electron / Angular</div>
     </div>
   </div>
@@ -26,18 +26,18 @@
   <div class="actions">
     @if (mock.status().state === 'stopped') {
       <button type="button" class="btn-success" (click)="onStart()">
-        ▶ Start Server
+        ▶ Démarrer
       </button>
     } @else {
       <button type="button" class="btn-danger" (click)="onStop()">
-        ■ Stop Server
+        ■ Arrêter
       </button>
     }
-    <button type="button" class="btn-ghost" title="Settings" (click)="onSettings()">
-      ⚙ Settings
+    <button type="button" class="btn-ghost" title="Paramètres" (click)="onSettings()">
+      ⚙ Paramètres
     </button>
     <button type="button" class="btn-ghost" (click)="onClearLogs()">
-      ✕ Clear Logs
+      ✕ Effacer
     </button>
   </div>
 

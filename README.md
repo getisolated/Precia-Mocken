@@ -1,59 +1,67 @@
 # PreciaMocken
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.8.
+Simulateur de borne de pont-bascule **Precia Molen BI400** — application Electron + Angular simulant le terminal industriel pour tester et développer sans matériel physique.
 
-## Development server
+![Dashboard](Dashboard.png)
 
-To start a local development server, run:
+## Ce que fait l'application
 
-```bash
-ng serve
-```
+PreciaMocken émule le comportement d'un terminal BI400 connecté en TCP. Il permet de :
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+- **Simuler le terminal LCD** — affiche en temps réel les trames reçues (texte AFM, poids, choix de boutons AIB, invites de saisie SCC)
+- **Envoyer des commandes** — badge, texte (Clavier), boutons AIB, trames brutes
+- **Gérer le poids** — configurer brut/tare/net, envoyer en stable (PDS) ou instable (PDD), auto-réponse aux polls
+- **Gérer les véhicules** — présence (PVE) et départ (DVE) ; un DVE est envoyé automatiquement à chaque connexion client
+- **Journaliser** — historique des trames et console TCP en temps réel
 
-## Code scaffolding
+### Protocole supporté
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+L'application implémente le protocole BI400 (TCP, trames préfixées par 4 caractères de longueur) :
 
-```bash
-ng generate component component-name
-```
+| Trame | Description |
+|-------|-------------|
+| PVE / DVE | Présence / Départ véhicule |
+| PDS / PDD | Poll poids stable / instable (auto-répondu) |
+| BDG | Lecture de badge |
+| SCC | Invite de saisie clavier |
+| AIB | Affichage de boutons de choix |
+| AFM | Affichage d'une ligne de texte |
+| AMP | Afficher/masquer le cadre poids |
+| RZE | Effacement complet de l'écran |
+| RZP | Effacement partiel |
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+## Lancer en développement
 
 ```bash
-ng test
+npm install
+npm run dev
 ```
 
-## Running end-to-end tests
+Ouvre Angular sur `http://127.0.0.1:4200` et lance Electron en parallèle.
 
-For end-to-end (e2e) testing, run:
+## Build de production
 
 ```bash
-ng e2e
+npm run build
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+Compile Angular (`dist/`) et Electron (`dist-electron/`) dans le dossier de sortie.
 
-## Additional Resources
+## Distribuer
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+```bash
+npm run dist
+```
+
+Génère un installable via `electron-builder` (configuré dans `package.json`).
+
+## Stack technique
+
+- **Electron 41** + **Angular 21** (standalone components, signals)
+- **TypeScript** throughout (strict mode)
+- Communication IPC via `contextBridge` / `preload`
+- Serveur TCP natif (`node:net`) pour le protocole BI400
+
+## Licence
+
+MIT — voir [LICENSE](LICENSE).

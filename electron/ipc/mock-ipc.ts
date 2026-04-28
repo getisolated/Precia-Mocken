@@ -98,14 +98,14 @@ export function registerMockIpc(): { dispose: () => Promise<void> } {
   ipcMain.handle(IPC_CHANNELS.sendPve, (): SendResult =>
     safeSend(buildPresenceVehicle(), {
       type: "PVE",
-      description: "Presence vehicle",
+      description: "Présence véhicule",
     }),
   );
 
   ipcMain.handle(IPC_CHANNELS.sendDve, (): SendResult =>
     safeSend(buildDepartureVehicle(), {
       type: "DVE",
-      description: "Departure vehicle",
+      description: "Départ véhicule",
     }),
   );
 
@@ -123,7 +123,7 @@ export function registerMockIpc(): { dispose: () => Promise<void> } {
     (_evt, value: string): SendResult =>
       safeSend(buildScc(value ?? ""), {
         type: "SCC",
-        description: `Tour ${value ?? ""}`,
+        description: `Tournée ${value ?? ""}`,
       }),
   );
 
@@ -141,16 +141,16 @@ export function registerMockIpc(): { dispose: () => Promise<void> } {
     (_evt, index: number): SendResult =>
       safeSend(buildAib(Number(index) || 0), {
         type: "AIB",
-        description: `Button ${index}`,
+        description: `Bouton ${index}`,
       }),
   );
 
   ipcMain.handle(IPC_CHANNELS.sendOk, (): SendResult =>
-    safeSend(buildOk(), { type: "AIB", description: "OK (button 2)" }),
+    safeSend(buildOk(), { type: "AIB", description: "OK (bouton 2)" }),
   );
 
   ipcMain.handle(IPC_CHANNELS.sendCancel, (): SendResult =>
-    safeSend(buildCancel(), { type: "AIB", description: "Cancel (button 1)" }),
+    safeSend(buildCancel(), { type: "AIB", description: "Annuler (bouton 1)" }),
   );
 
   const normalizeWeight = (payload: WeightPayload): WeightPayload => ({
@@ -171,7 +171,7 @@ export function registerMockIpc(): { dispose: () => Promise<void> } {
         : buildPdd(normalized);
       return safeSend(raw, {
         type: normalized.stable ? "PDS" : "PDD",
-        description: normalized.stable ? "Stable weight" : "Unstable weight",
+        description: normalized.stable ? "Poids stable" : "Poids instable",
       });
     },
   );
@@ -189,7 +189,7 @@ export function registerMockIpc(): { dispose: () => Promise<void> } {
     (_evt, raw: string): SendResult =>
       safeSend(buildRaw(raw ?? ""), {
         type: "RAW",
-        description: "Raw debug frame",
+        description: "Trame brute (debug)",
       }),
   );
 

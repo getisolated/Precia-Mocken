@@ -1,0 +1,65 @@
+<div class="card">
+  <div class="body">
+  <div class="weight-grid">
+    <div>
+      <label>Brut (kg)</label>
+      <input
+        class="monofont"
+        [ngModel]="weight().gross"
+        (ngModelChange)="updateGross($event)"
+      />
+    </div>
+    <div>
+      <label>Tare (kg)</label>
+      <input
+        class="monofont"
+        [ngModel]="weight().tare"
+        (ngModelChange)="updateTare($event)"
+      />
+    </div>
+    <div>
+      <label>Net (kg)</label>
+      <input
+        class="monofont"
+        [ngModel]="weight().net"
+        (ngModelChange)="updateNet($event)"
+        [disabled]="autoCalcNet()"
+      />
+    </div>
+    <div>
+      <label>DSD</label>
+      <input
+        class="monofont"
+        [ngModel]="weight().dsd"
+        (ngModelChange)="updateDsd($event)"
+      />
+    </div>
+  </div>
+  <label class="checkbox">
+    <input
+      type="checkbox"
+      [ngModel]="autoCalcNet()"
+      (ngModelChange)="toggleAutoCalc($event)"
+    />
+    <span>Calcul auto du net (brut − tare)</span>
+  </label>
+  <div class="row">
+    <button
+      type="button"
+      class="btn-cyan grow"
+      [disabled]="disabled()"
+      (click)="sendPds()"
+    >
+      ↑ Envoyer PDS (stable)
+    </button>
+    <button
+      type="button"
+      class="btn-pdd grow"
+      [disabled]="disabled()"
+      (click)="sendPdd()"
+    >
+      ↑ Envoyer PDD (instable)
+    </button>
+  </div>
+  </div>
+</div>
